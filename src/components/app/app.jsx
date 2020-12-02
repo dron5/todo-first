@@ -6,71 +6,71 @@ import TaskList from '../task-list';
 import './app.css';
 
 export default class App extends Component {
-    maxId = 100;
+  maxId = 100;
 
-    state = {
-      todoData: [
-        this.createItem('Completed task'),
-        this.createItem('Editing task'),
-        this.createItem('Active task'),
-      ],
-    }
+  state = {
+    todoData: [
+      this.createItem('Completed task'),
+      this.createItem('Editing task'),
+      this.createItem('Active task'),
+    ]
+  }
 
-    addItem = (text) => {
-      const newTask = this.createItem(text);
-      this.setState(({ todoData }) => {
-        const newTodoData = [
-          ...todoData, newTask,
-        ];
-        return {
-          todoData: newTodoData,
-        };
-      });
-    }
+  addItem = (text) => {
+    const newTask = this.createItem(text);
+    this.setState(({ todoData }) => {
+      const newTodoData = [
+        ...todoData, newTask,
+      ];
+      return {
+        todoData: newTodoData,
+      };
+    });
+  }
 
-    deletItem = (id) => {
-      this.setState(({ todoData }) => {
-        const idx = todoData.findIndex((el) => el.id === id);
-        const newTodoData = [
-          ...todoData.slice(0, idx),
-          ...todoData.slice(idx + 1),
-        ];
-        return {
-          todoData: newTodoData,
-        };
-      });
-    }
+  deletItem = (id) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
+      const newTodoData = [
+        ...todoData.slice(0, idx),
+        ...todoData.slice(idx + 1),
+      ];
+      return {
+        todoData: newTodoData,
+      };
+    });
+  }
 
-    editItemButton = (id) => {
-      this.setState(({ todoData }) => ({
-        todoData: this.togglePropertySign(todoData, id,
-          'edit', true),
-      }));
-    }
+  editItemButton = (id) => {
+    this.setState(({ todoData }) => ({
+      todoData: this.togglePropertySign(todoData, id,
+        'edit', true),
+    }));
+  }
 
-    editItemForm = (id, text) => {
-      this.setState(({ todoData }) => {
-        const idx = todoData.findIndex((el) => el.id === id);
+  editItemForm = (id, text) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
 
-        const oldItem = todoData[idx];
-        const newItem = {
-          ...oldItem,
-          label: text,
-        };
-        const newTodo = [
-          ...todoData.slice(0, idx),
-          newItem,
-          ...todoData.slice(idx + 1),
-        ];
-        return {
-          todoData: newTodo,
-        };
-      });
-      this.setState(({ todoData }) => ({
-        todoData: this.togglePropertySign(todoData,
-          id, 'edit', false),
-      }));
-    }
+      const oldItem = todoData[idx];
+      const newItem = {
+        ...oldItem,
+        label: text,
+      };
+      const newTodo = [
+        ...todoData.slice(0, idx),
+        newItem,
+        ...todoData.slice(idx + 1),
+      ];
+      return {
+        todoData: newTodo,
+      };
+    });
+    this.setState(({ todoData }) => ({
+      todoData: this.togglePropertySign(todoData,
+        id, 'edit', false),
+    }));
+  }
 
     onToggleCompleted = (id) => {
       this.setState(({ todoData }) => ({

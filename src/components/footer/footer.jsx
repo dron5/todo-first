@@ -11,9 +11,7 @@ export default class Footer extends Component {
     return (
       <footer className="footer">
         <span className="todo-count">
-          {' '}
           { leftTodo }
-          {' '}
           items left
         </span>
         <ul className="filters">
