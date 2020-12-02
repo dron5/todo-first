@@ -1,0 +1,6 @@
+.task-list .task-item {
+    padding: .25rem .75rem;
+}
+.task-list {
+    list-style-type: none;
+}
