@@ -11,10 +11,17 @@ const TaskList = ({
   showCompleted, deletCompleted,
 }) => {
   const elements = todos.map((item) => {
-    const { id } = item;
+    const {
+      id, label, edit, completed, visibility,
+    } = item;
+
     return (
       <Task
-        {...item}
+        label={label}
+        edit={edit}
+        id={id}
+        completed={completed}
+        visibility={visibility}
         onDeleted={() => { onDeleted(item.id); }}
         onEditButton={() => { onEditButton(item.id); }}
         onEditForm={onEditForm}
@@ -55,5 +62,9 @@ TaskList.propTypes = {
   showActive: PropTypes.func,
   showCompleted: PropTypes.func,
   deletCompleted: PropTypes.func,
+  onDeleted: PropTypes.func.isRequired,
+  onEditButton: PropTypes.func.isRequired,
+  onToggleCompleted: PropTypes.func.isRequired,
+  onEditForm: PropTypes.func.isRequired,
 };
 export default TaskList;

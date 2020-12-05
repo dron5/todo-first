@@ -3,19 +3,14 @@ import PropTypes from 'prop-types';
 // import './editing-item.css';
 
 export default class EditingItem extends Component {
-    static defaultProps = {
-      onEditForm: () => {},
-    }
+  constructor(props) {
+    super(props);
+    this.state = { label: '' };
+  }
 
-    static propTypes = {
-      onEditForm: PropTypes.func,
-      label: PropTypes.string.isRequired,
-      edit: PropTypes.bool.isRequired,
-    }
-
-    state = {
-      label: '',
-    }
+  // state = {
+  //   label: '',
+  // }
 
     onChange = (event) => {
       this.setState({
@@ -25,8 +20,10 @@ export default class EditingItem extends Component {
 
     onSubmit = (event) => {
       event.preventDefault();
-      if (this.state.label) {
-        this.props.onEditForm(this.props.id, this.state.label);
+      const { label } = this.state;
+      const { onEditForm, id } = this.props;
+      if (label) {
+        onEditForm(id, label);
       }
     }
 
@@ -38,7 +35,6 @@ export default class EditingItem extends Component {
             <input
               type="text"
               className="edit"
-              autoFocus
               defaultValue={label}
               onChange={this.onChange}
             />
@@ -48,3 +44,13 @@ export default class EditingItem extends Component {
       return null;
     }
 }
+EditingItem.defaultProps = {
+  onEditForm: () => {},
+};
+
+EditingItem.propTypes = {
+  onEditForm: PropTypes.func,
+  label: PropTypes.string.isRequired,
+  edit: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
+};

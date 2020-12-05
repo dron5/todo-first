@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 
 import Header from '../header';
@@ -8,13 +9,24 @@ import './app.css';
 export default class App extends Component {
   maxId = 100;
 
-  state = {
-    todoData: [
-      this.createItem('Completed task'),
-      this.createItem('Editing task'),
-      this.createItem('Active task'),
-    ]
+  constructor(props) {
+    super(props);
+    this.state = {
+      todoData: [
+        this.createItem('Completed task'),
+        this.createItem('Editing task'),
+        this.createItem('Active task'),
+      ],
+    };
   }
+
+  // state = {
+  //   todoData: [
+  //     this.createItem('Completed task'),
+  //     this.createItem('Editing task'),
+  //     this.createItem('Active task'),
+  //   ],
+  // }
 
   addItem = (text) => {
     const newTask = this.createItem(text);
@@ -72,123 +84,124 @@ export default class App extends Component {
     }));
   }
 
-    onToggleCompleted = (id) => {
+  onToggleCompleted = (id) => {
+    this.setState(({ todoData }) => ({
+      todoData: this.toggleProperty(todoData, id, 'completed'),
+    }));
+  }
+
+  switchAllProps = (arr, prop, flag) => {
+    arr.forEach((el) => {
+      const idx = el.id;
       this.setState(({ todoData }) => ({
-        todoData: this.toggleProperty(todoData, id, 'completed'),
+        todoData: this.togglePropertySign(todoData, idx,
+          prop, flag),
       }));
-    }
+    });
+  }
 
-    switchAllProps = (arr, prop, flag) => {
-      arr.forEach((el) => {
-        const idx = el.id;
-        this.setState(({ todoData }) => ({
-          todoData: this.togglePropertySign(todoData, idx,
-            prop, flag),
-        }));
+  onShowAll = () => {
+    const { todoData } = this.state;
+    this.switchAllProps(todoData, 'visibility', true);
+  };
+
+  onShowActive = () => {
+    const { todoData } = this.state;
+    const toHide = todoData.filter((el) => el.completed);
+    const toShow = todoData.filter((el) => !el.completed);
+    this.switchAllProps(toHide, 'visibility', false);
+    this.switchAllProps(toShow, 'visibility', true);
+  };
+
+  onShowCompleted = () => {
+    const { todoData } = this.state;
+    const toHide = todoData.filter((el) => !el.completed);
+    const toShow = todoData.filter((el) => el.completed);
+    this.switchAllProps(toHide, 'visibility', false);
+    this.switchAllProps(toShow, 'visibility', true);
+  };
+
+  onDeletCompleted = () => {
+    const { todoData } = this.state;
+    const toDelet = todoData.filter((el) => el.completed);
+    toDelet.forEach((el) => {
+      this.setState(() => {
+        const idx = todoData.findIndex((elem) => elem.id === el.id);
+        const newTodoData = [
+          ...todoData.slice(0, idx),
+          ...todoData.slice(idx + 1),
+        ];
+        return {
+          todoData: newTodoData,
+        };
       });
-    }
+    });
+  }
 
-    onShowAll = () => {
-      const { todoData } = this.state;
-      this.switchAllProps(todoData, 'visibility', true);
+  // если не работает, сделать внизу как было
+  toggleProperty = (arr, id, propName) => {
+    const idx = arr.findIndex((el) => el.id === id);
+
+    const oldItem = arr[idx];
+    const newItem = {
+      ...oldItem,
+      [propName]: !oldItem[propName],
     };
+    return [
+      ...arr.slice(0, idx),
+      newItem,
+      ...arr.slice(idx + 1),
+    ];
+  }
 
-    onShowActive = () => {
-      const { todoData } = this.state;
-      const toHide = todoData.filter((el) => el.completed);
-      const toShow = todoData.filter((el) => !el.completed);
-      this.switchAllProps(toHide, 'visibility', false);
-      this.switchAllProps(toShow, 'visibility', true);
+  togglePropertySign = (arr, id, propName, sign) => {
+    const idx = arr.findIndex((el) => el.id === id);
+
+    const oldItem = arr[idx];
+    const newItem = {
+      ...oldItem,
+      [propName]: sign,
     };
+    return [
+      ...arr.slice(0, idx),
+      newItem,
+      ...arr.slice(idx + 1),
+    ];
+  }
 
-    onShowCompleted = () => {
-      const { todoData } = this.state;
-      const toHide = todoData.filter((el) => !el.completed);
-      const toShow = todoData.filter((el) => el.completed);
-      this.switchAllProps(toHide, 'visibility', false);
-      this.switchAllProps(toShow, 'visibility', true);
+  createItem(label) {
+    return {
+      label,
+      edit: false,
+      completed: false,
+      visibility: true,
+      id: this.maxId++,
     };
+  }
 
-    onDeletCompleted = () => {
-      const { todoData } = this.state;
-      const toDelet = todoData.filter((el) => el.completed);
-      toDelet.forEach((el) => {
-        this.setState(({ todoData }) => {
-          const idx = todoData.findIndex((elem) => elem.id === el.id);
-          const newTodoData = [
-            ...todoData.slice(0, idx),
-            ...todoData.slice(idx + 1),
-          ];
-          return {
-            todoData: newTodoData,
-          };
-        });
-      });
-    }
-
-    createItem(label) {
-      return {
-        label,
-        edit: false,
-        completed: false,
-        visibility: true,
-        id: this.maxId++,
-      };
-    }
-
-    toggleProperty(arr, id, propName) {
-      const idx = arr.findIndex((el) => el.id === id);
-
-      const oldItem = arr[idx];
-      const newItem = {
-        ...oldItem,
-        [propName]: !oldItem[propName],
-      };
-      return [
-        ...arr.slice(0, idx),
-        newItem,
-        ...arr.slice(idx + 1),
-      ];
-    }
-
-    togglePropertySign(arr, id, propName, sign) {
-      const idx = arr.findIndex((el) => el.id === id);
-
-      const oldItem = arr[idx];
-      const newItem = {
-        ...oldItem,
-        [propName]: sign,
-      };
-      return [
-        ...arr.slice(0, idx),
-        newItem,
-        ...arr.slice(idx + 1),
-      ];
-    }
-
-    render() {
-      const { todoData } = this.state;
-      const completedCount = todoData
-        .filter((el) => el.completed).length;
-      const todoCount = todoData.length - completedCount;
-      return (
-        <section className="todoapp">
-          <Header
-            onAdded={this.addItem}
-          />
-          <TaskList
-            todos={this.state.todoData}
-            onDeleted={this.deletItem}
-            onEditButton={this.editItemButton}
-            onEditForm={this.editItemForm}
-            onToggleCompleted={this.onToggleCompleted}
-            leftTodo={todoCount}
-            showAll={this.onShowAll}
-            showActive={this.onShowActive}
-            showCompleted={this.onShowCompleted}
-            deletCompleted={this.onDeletCompleted}
-          />
-        </section>
-      );
-    }
+  render() {
+    const { todoData } = this.state;
+    const completedCount = todoData
+      .filter((el) => el.completed).length;
+    const todoCount = todoData.length - completedCount;
+    return (
+      <section className="todoapp">
+        <Header
+          onAdded={this.addItem}
+        />
+        <TaskList
+          todos={todoData}
+          onDeleted={this.deletItem}
+          onEditButton={this.editItemButton}
+          onEditForm={this.editItemForm}
+          onToggleCompleted={this.onToggleCompleted}
+          leftTodo={todoCount}
+          showAll={this.onShowAll}
+          showActive={this.onShowActive}
+          showCompleted={this.onShowCompleted}
+          deletCompleted={this.onDeletCompleted}
+        />
+      </section>
+    );
+  }
 }
