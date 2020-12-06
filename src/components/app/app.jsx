@@ -1,5 +1,6 @@
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
+// import { setTimeout } from 'timers';
 
 import Header from '../header';
 import TaskList from '../task-list';
@@ -123,19 +124,8 @@ export default class App extends Component {
 
   onDeletCompleted = () => {
     const { todoData } = this.state;
-    const toDelet = todoData.filter((el) => el.completed);
-    toDelet.forEach((el) => {
-      this.setState(() => {
-        const idx = todoData.findIndex((elem) => elem.id === el.id);
-        const newTodoData = [
-          ...todoData.slice(0, idx),
-          ...todoData.slice(idx + 1),
-        ];
-        return {
-          todoData: newTodoData,
-        };
-      });
-    });
+    const notCompletedTask = todoData.filter((el) => !el.completed);
+    this.setState({ todoData: [...notCompletedTask] });
   }
 
   // если не работает, сделать внизу как было
