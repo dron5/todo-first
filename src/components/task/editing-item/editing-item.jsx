@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 export default class EditingItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { label: '' };
+    const { label } = this.props;
+    this.state = { stateLabel: label };
   }
 
   // state = {
@@ -14,16 +15,16 @@ export default class EditingItem extends Component {
 
     onChange = (event) => {
       this.setState({
-        label: event.target.value,
+        stateLabel: event.target.value,
       });
     }
 
     onSubmit = (event) => {
       event.preventDefault();
-      const { label } = this.state;
+      const { stateLabel } = this.state;
       const { onEditForm, id } = this.props;
-      if (label) {
-        onEditForm(id, label);
+      if (stateLabel) {
+        onEditForm(id, stateLabel);
       }
     }
 

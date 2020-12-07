@@ -129,6 +129,7 @@ export default class App extends Component {
   onDeletCompleted = () => {
     const { todoData } = this.state;
     const notCompletedTask = todoData.filter((el) => !el.completed);
+    // добавить callback в setState
     this.setState({ todoData: [...notCompletedTask] });
   }
 
