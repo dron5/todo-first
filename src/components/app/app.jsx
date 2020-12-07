@@ -1,6 +1,5 @@
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
-// import { setTimeout } from 'timers';
 
 import Header from '../header';
 import TaskList from '../task-list';
@@ -55,10 +54,15 @@ export default class App extends Component {
   }
 
   editItemButton = (id) => {
-    this.setState(({ todoData }) => ({
-      todoData: this.togglePropertySign(todoData, id,
-        'edit', true),
-    }));
+    const { todoData } = this.state;
+    const [taskToEdit] = todoData.filter((el) => el.id === id);
+    const alreadyEditTask = todoData.filter((el) => el.edit);
+    if (!taskToEdit.completed && !alreadyEditTask.length) {
+      this.setState(() => ({
+        todoData: this.togglePropertySign(todoData, id,
+          'edit', true),
+      }));
+    }
   }
 
   editItemForm = (id, text) => {
@@ -91,8 +95,8 @@ export default class App extends Component {
     }));
   }
 
-  switchAllProps = (arr, prop, flag) => {
-    arr.forEach((el) => {
+  switchAllProps = (taskToEdit, prop, flag) => {
+    taskToEdit.forEach((el) => {
       const idx = el.id;
       this.setState(({ todoData }) => ({
         todoData: this.togglePropertySign(todoData, idx,
@@ -129,33 +133,33 @@ export default class App extends Component {
   }
 
   // если не работает, сделать внизу как было
-  toggleProperty = (arr, id, propName) => {
-    const idx = arr.findIndex((el) => el.id === id);
+  toggleProperty = (taskToEdit, id, propName) => {
+    const idx = taskToEdit.findIndex((el) => el.id === id);
 
-    const oldItem = arr[idx];
+    const oldItem = taskToEdit[idx];
     const newItem = {
       ...oldItem,
       [propName]: !oldItem[propName],
     };
     return [
-      ...arr.slice(0, idx),
+      ...taskToEdit.slice(0, idx),
       newItem,
-      ...arr.slice(idx + 1),
+      ...taskToEdit.slice(idx + 1),
     ];
   }
 
-  togglePropertySign = (arr, id, propName, sign) => {
-    const idx = arr.findIndex((el) => el.id === id);
+  togglePropertySign = (taskToEdit, id, propName, sign) => {
+    const idx = taskToEdit.findIndex((el) => el.id === id);
 
-    const oldItem = arr[idx];
+    const oldItem = taskToEdit[idx];
     const newItem = {
       ...oldItem,
       [propName]: sign,
     };
     return [
-      ...arr.slice(0, idx),
+      ...taskToEdit.slice(0, idx),
       newItem,
-      ...arr.slice(idx + 1),
+      ...taskToEdit.slice(idx + 1),
     ];
   }
 
