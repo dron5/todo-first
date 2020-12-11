@@ -108,33 +108,15 @@ export default class App extends Component {
   }
 
   toggleProperty = (taskToEdit, id, propName) => {
-    const idx = taskToEdit.findIndex((el) => el.id === id);
-
-    const oldItem = taskToEdit[idx];
-    const newItem = {
-      ...oldItem,
-      [propName]: !oldItem[propName],
-    };
-    return [
-      ...taskToEdit.slice(0, idx),
-      newItem,
-      ...taskToEdit.slice(idx + 1),
-    ];
+    const toggledProperty = taskToEdit.map((el) => (
+      el.id === id ? { ...el, [propName]: !el[propName] } : el));
+    return toggledProperty;
   }
 
   togglePropertySign = (taskToEdit, id, propName, sign) => {
-    const idx = taskToEdit.findIndex((el) => el.id === id);
-
-    const oldItem = taskToEdit[idx];
-    const newItem = {
-      ...oldItem,
-      [propName]: sign,
-    };
-    return [
-      ...taskToEdit.slice(0, idx),
-      newItem,
-      ...taskToEdit.slice(idx + 1),
-    ];
+    const toggledProperty = taskToEdit.map((el) => (
+      el.id === id ? { ...el, [propName]: sign } : el));
+    return toggledProperty;
   }
 
   createItem(label) {
