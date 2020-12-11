@@ -1,17 +1,13 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import './editing-item.css';
 
 export default class EditingItem extends Component {
-  constructor(props) {
-    super(props);
-    const { label } = this.props;
-    this.state = { stateLabel: label };
+  state = {
+    stateLabel: this.props.label,
   }
-
-  // state = {
-  //   label: '',
-  // }
 
     onChange = (event) => {
       this.setState({

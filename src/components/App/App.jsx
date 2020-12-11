@@ -1,3 +1,4 @@
+/* eslint-disable react/state-in-constructor */
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 
@@ -9,24 +10,13 @@ import './app.css';
 export default class App extends Component {
   maxId = 100;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      todoData: [
-        this.createItem('Completed task'),
-        this.createItem('Editing task'),
-        this.createItem('Active task'),
-      ],
-    };
+  state = {
+    todoData: [
+      this.createItem('Completed task'),
+      this.createItem('Editing task'),
+      this.createItem('Active task'),
+    ],
   }
-
-  // state = {
-  //   todoData: [
-  //     this.createItem('Completed task'),
-  //     this.createItem('Editing task'),
-  //     this.createItem('Active task'),
-  //   ],
-  // }
 
   addItem = (text) => {
     const newTask = this.createItem(text);

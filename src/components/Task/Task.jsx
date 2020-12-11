@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/state-in-constructor */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { Component } from 'react';
@@ -10,18 +12,10 @@ import EditingItem from './Editing-item';
 import './task.css';
 
 export default class Task extends Component {
-  constructor(props) {
-    super(props);
-    const { date } = this.props;
-    this.state = {
-      startTime: date,
-      lastTime: ' ',
-    };
+  state = {
+    startTime: this.props.date,
+    lastTime: '1',
   }
-  // state = {
-  //   startTime: this.props.date,
-  //   lastTime: '1',
-  // }
 
   componentDidMount() {
     this.timerID = setInterval(
