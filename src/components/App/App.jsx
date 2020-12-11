@@ -1,3 +1,6 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-return-assign */
 /* eslint-disable react/state-in-constructor */
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
@@ -20,27 +23,16 @@ export default class App extends Component {
 
   addItem = (text) => {
     const newTask = this.createItem(text);
-    this.setState(({ todoData }) => {
-      const newTodoData = [
-        ...todoData, newTask,
-      ];
-      return {
-        todoData: newTodoData,
-      };
-    });
+    this.setState(({ todoData }) => ({
+      todoData: [...todoData, newTask],
+    }));
   }
 
   deletItem = (id) => {
-    this.setState(({ todoData }) => {
-      const idx = todoData.findIndex((el) => el.id === id);
-      const newTodoData = [
-        ...todoData.slice(0, idx),
-        ...todoData.slice(idx + 1),
-      ];
-      return {
-        todoData: newTodoData,
-      };
-    });
+    const { todoData } = this.state;
+    this.setState(() => ({
+      todoData: [...todoData.filter((el) => el.id !== id)],
+    }));
   }
 
   editItemButton = (id) => {
@@ -56,26 +48,17 @@ export default class App extends Component {
   }
 
   editItemForm = (id, text) => {
-    this.setState(({ todoData }) => {
-      const idx = todoData.findIndex((el) => el.id === id);
-
-      const oldItem = todoData[idx];
-      const newItem = {
-        ...oldItem,
-        label: text,
-      };
-      const newTodo = [
-        ...todoData.slice(0, idx),
-        newItem,
-        ...todoData.slice(idx + 1),
-      ];
-      return {
-        todoData: newTodo,
-      };
+    const { todoData } = this.state;
+    const newData = todoData.map((el) => {
+      if (el.id === id) {
+        el.label = text;
+        el.edit = false;
+        return el;
+      }
+      return el;
     });
-    this.setState(({ todoData }) => ({
-      todoData: this.togglePropertySign(todoData,
-        id, 'edit', false),
+    this.setState(() => ({
+      todoData: [...newData],
     }));
   }
 
@@ -119,11 +102,11 @@ export default class App extends Component {
   onDeletCompleted = () => {
     const { todoData } = this.state;
     const notCompletedTask = todoData.filter((el) => !el.completed);
-    // добавить callback в setState
-    this.setState({ todoData: [...notCompletedTask] });
+    this.setState(() => ({
+      todoData: [...notCompletedTask],
+    }));
   }
 
-  // если не работает, сделать внизу как было
   toggleProperty = (taskToEdit, id, propName) => {
     const idx = taskToEdit.findIndex((el) => el.id === id);
 
