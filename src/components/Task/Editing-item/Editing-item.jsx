@@ -17,9 +17,10 @@ export default class EditingItem extends Component {
 
     onSubmit = (event) => {
       event.preventDefault();
-      const { stateLabel } = this.state;
+      let { stateLabel } = this.state;
+      stateLabel = stateLabel.trim();
       const { onEditForm, id } = this.props;
-      if (stateLabel) {
+      if (stateLabel && stateLabel !== ' ') {
         onEditForm(id, stateLabel);
       }
     }
