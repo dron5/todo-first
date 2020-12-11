@@ -1,8 +1,8 @@
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 
-import Header from '../header';
-import TaskList from '../task-list';
+import Header from '../Header';
+import TaskList from '../Task-list';
 
 import './app.css';
 
