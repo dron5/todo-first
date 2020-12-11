@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import ruLocale from 'date-fns/locale/ru';
 
-import EditingItem from './editing-item';
+import EditingItem from './Editing-item';
 import './task.css';
 
 export default class Task extends Component {

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Task from '../task';
-import './task-list.css';
-import Footer from '../footer';
+import Task from '../Task';
+import './Task-list.css';
+import Footer from '../Footer';
 
 const TaskList = ({
   todos, onDeleted, onEditButton,
