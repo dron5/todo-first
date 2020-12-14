@@ -8,11 +8,11 @@ const TaskList = ({
   todos, onDeleted, onEditButton,
   onToggleCompleted, leftTodo,
   showAll, showActive, onEditForm,
-  showCompleted, deletCompleted,
+  showCompleted, deletCompleted, pressedButton,
 }) => {
   const elements = todos.map((item) => {
     const {
-      id, label, edit, completed, visibility,
+      id, label, edit, completed,
     } = item;
 
     return (
@@ -21,7 +21,7 @@ const TaskList = ({
         edit={edit}
         id={id}
         completed={completed}
-        visibility={visibility}
+        pressedButton={pressedButton}
         onDeleted={() => { onDeleted(item.id); }}
         onEditButton={() => { onEditButton(item.id); }}
         onEditForm={onEditForm}
@@ -38,6 +38,7 @@ const TaskList = ({
       </ul>
       <Footer
         leftTodo={leftTodo}
+        pressedButton={pressedButton}
         showAll={showAll}
         showActive={showActive}
         showCompleted={showCompleted}
@@ -58,6 +59,7 @@ TaskList.defaultProps = {
 TaskList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   leftTodo: PropTypes.number,
+  pressedButton: PropTypes.string.isRequired,
   showAll: PropTypes.func,
   showActive: PropTypes.func,
   showCompleted: PropTypes.func,

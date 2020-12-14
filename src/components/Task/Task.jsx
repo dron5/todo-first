@@ -45,15 +45,22 @@ export default class Task extends Component {
     const {
       label, edit, onEditButton,
       onToggleCompleted, completed, onDeleted,
-      visibility, onEditForm, id,
+      onEditForm, id, pressedButton,
     } = this.props;
+    let visibility = true;
     let className = '';
 
     const { lastTime } = this.state;
     const time = ` ${lastTime}`;
 
+    if (!completed && pressedButton === 'Completed') {
+      visibility = false;
+    }
     if (completed && !edit) {
       className += 'completed';
+      if (pressedButton === 'Active') {
+        visibility = false;
+      }
     }
     if (edit) {
       className = 'editing';
@@ -106,8 +113,8 @@ Task.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   edit: PropTypes.bool.isRequired,
-  visibility: PropTypes.bool.isRequired,
   completed: PropTypes.bool.isRequired,
+  pressedButton: PropTypes.string.isRequired,
   onEditButton: PropTypes.func,
   onToggleCompleted: PropTypes.func.isRequired,
   onDeleted: PropTypes.func,

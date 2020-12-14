@@ -5,38 +5,38 @@ import PropTypes from 'prop-types';
 
 export default class NewTaskForm extends Component {
   state = {
-    label: '',
+    stateLabel: '',
   }
 
     onAddItem = (event) => {
       this.setState({
-        label: event.target.value,
+        stateLabel: event.target.value,
       });
     }
 
     onSubmit = (event) => {
       event.preventDefault();
-      let { label } = this.state;
+      let { stateLabel } = this.state;
       const { onAdded } = this.props;
-      label = label.trim();
-      if (label && label !== ' ') {
-        onAdded(label);
+      stateLabel = stateLabel.trim();
+      if (stateLabel && stateLabel !== ' ') {
+        onAdded(stateLabel);
         this.setState({
-          label: '',
+          stateLabel: '',
         });
       }
     }
 
     render() {
       const searchText = 'What needs to be done?';
-      const { label } = this.state;
+      const { stateLabel } = this.state;
       return (
         <form onSubmit={this.onSubmit}>
           <input
             className="new-todo"
             placeholder={searchText}
             onChange={this.onAddItem}
-            value={label}
+            value={stateLabel}
           />
         </form>
       );

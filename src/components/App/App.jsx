@@ -19,6 +19,7 @@ export default class App extends Component {
       this.createItem('Editing task'),
       this.createItem('Active task'),
     ],
+    pressedButton: 'All',
   }
 
   addItem = (text) => {
@@ -41,8 +42,8 @@ export default class App extends Component {
     const alreadyEditTask = todoData.filter((el) => el.edit);
     if (!taskToEdit.completed && !alreadyEditTask.length) {
       this.setState(() => ({
-        todoData: this.togglePropertySign(todoData, id,
-          'edit', true),
+        todoData: this.toggleProperty(todoData, id,
+          'edit'),
       }));
     }
   }
@@ -68,35 +69,22 @@ export default class App extends Component {
     }));
   }
 
-  switchAllProps = (taskToEdit, prop, flag) => {
-    taskToEdit.forEach((el) => {
-      const idx = el.id;
-      this.setState(({ todoData }) => ({
-        todoData: this.togglePropertySign(todoData, idx,
-          prop, flag),
-      }));
-    });
-  }
-
   onShowAll = () => {
-    const { todoData } = this.state;
-    this.switchAllProps(todoData, 'visibility', true);
+    this.setState(() => ({
+      pressedButton: 'All',
+    }));
   };
 
   onShowActive = () => {
-    const { todoData } = this.state;
-    const toHide = todoData.filter((el) => el.completed);
-    const toShow = todoData.filter((el) => !el.completed);
-    this.switchAllProps(toHide, 'visibility', false);
-    this.switchAllProps(toShow, 'visibility', true);
+    this.setState(() => ({
+      pressedButton: 'Active',
+    }));
   };
 
   onShowCompleted = () => {
-    const { todoData } = this.state;
-    const toHide = todoData.filter((el) => !el.completed);
-    const toShow = todoData.filter((el) => el.completed);
-    this.switchAllProps(toHide, 'visibility', false);
-    this.switchAllProps(toShow, 'visibility', true);
+    this.setState(() => ({
+      pressedButton: 'Completed',
+    }));
   };
 
   onDeletCompleted = () => {
@@ -113,24 +101,18 @@ export default class App extends Component {
     return toggledProperty;
   }
 
-  togglePropertySign = (taskToEdit, id, propName, sign) => {
-    const toggledProperty = taskToEdit.map((el) => (
-      el.id === id ? { ...el, [propName]: sign } : el));
-    return toggledProperty;
-  }
-
   createItem(label) {
     return {
       label,
       edit: false,
       completed: false,
-      visibility: true,
       id: this.maxId++,
     };
   }
 
   render() {
     const { todoData } = this.state;
+    const { pressedButton } = this.state;
     const completedCount = todoData
       .filter((el) => el.completed).length;
     const todoCount = todoData.length - completedCount;
@@ -141,6 +123,7 @@ export default class App extends Component {
         />
         <TaskList
           todos={todoData}
+          pressedButton={pressedButton}
           onDeleted={this.deletItem}
           onEditButton={this.editItemButton}
           onEditForm={this.editItemForm}
