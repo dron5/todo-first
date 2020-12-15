@@ -26,17 +26,20 @@ export default class EditingItem extends Component {
     }
 
     render() {
-      const { label } = this.props;
-      return (
-        <form onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            className="edit"
-            defaultValue={label}
-            onChange={this.onChange}
-          />
-        </form>
-      );
+      const { edit, label } = this.props;
+      if (edit) {
+        return (
+          <form onSubmit={this.onSubmit}>
+            <input
+              type="text"
+              className="edit"
+              defaultValue={label}
+              onChange={this.onChange}
+            />
+          </form>
+        );
+      }
+      return null;
     }
 }
 EditingItem.defaultProps = {
@@ -46,5 +49,7 @@ EditingItem.defaultProps = {
 EditingItem.propTypes = {
   onEditForm: PropTypes.func,
   label: PropTypes.string.isRequired,
+  edit: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
 };
+ 

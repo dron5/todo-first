@@ -94,12 +94,14 @@ export default class Task extends Component {
             onClick={onDeleted}
           />
         </div>
+        {edit && (
         <EditingItem
           edit={edit}
           label={label}
           onEditForm={onEditForm}
           id={id}
         />
+        )}
       </li>
     );
   }
