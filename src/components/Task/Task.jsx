@@ -1,5 +1,4 @@
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/state-in-constructor */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { Component } from 'react';
@@ -7,7 +6,6 @@ import PropTypes from 'prop-types';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-import EditingItem from './Editing-item';
 import './task.css';
 
 export default class Task extends Component {
@@ -20,6 +18,7 @@ export default class Task extends Component {
     // this.formatedDate = this.date.toString().slice(4, 24);
     this.state = {
       createDate: this.formatedDate,
+      stateLabel: this.props.label,
     };
   }
 
@@ -34,6 +33,20 @@ export default class Task extends Component {
     clearInterval(this.timerID);
   }
 
+  onChangeInput = (event) => {
+    this.setState({
+      stateLabel: event.target.value,
+    });
+  }
+
+  onSubmitForm = (event) => {
+    event.preventDefault();
+    let { stateLabel } = this.state;
+    const { onEditForm, id } = this.props;
+    stateLabel = stateLabel.trim();
+    if (stateLabel && stateLabel !== ' ') { onEditForm(id, stateLabel); }
+  }
+
   tick() {
     this.setState(() => ({
       createDate: this.formatedDate,
@@ -42,9 +55,8 @@ export default class Task extends Component {
 
   render() {
     const {
-      label, edit, onEditButton,
+      label, edit, onEditButton, pressedButton,
       onToggleCompleted, completed, onDeleted,
-      onEditForm, id, pressedButton,
     } = this.props;
     let visibility = true;
     let className = '';
@@ -56,26 +68,17 @@ export default class Task extends Component {
     }
     if (completed && !edit) {
       className += 'completed';
-      if (pressedButton === 'Active') {
-        visibility = false;
-      }
+      if (pressedButton === 'Active') { visibility = false; }
     }
-    if (edit) {
-      className = 'editing';
-    }
+    if (edit) { className = 'editing'; }
     if (!visibility) { className += ' hidden'; }
+
     return (
       <li className={className}>
         <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            onClick={onToggleCompleted}
-          />
+          <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
           <label>
-            <span className="description">
-              { label }
-            </span>
+            <span className="description">{ label }</span>
             <span className="created">
               {`${'created '}`}
               {formatDistanceToNow(
@@ -84,25 +87,17 @@ export default class Task extends Component {
               )}
             </span>
           </label>
-          <button
-            type="button"
-            className="icon icon-edit"
-            onClick={onEditButton}
-          />
-          <button
-            type="button"
-            className="icon icon-destroy"
-            onClick={onDeleted}
-          />
+          <button type="button" className="icon icon-edit" onClick={onEditButton} />
+          <button type="button" className="icon icon-destroy" onClick={onDeleted} />
         </div>
-        {edit && (
-        <EditingItem
-          edit={edit}
-          label={label}
-          onEditForm={onEditForm}
-          id={id}
-        />
-        )}
+        <form onSubmit={this.onSubmitForm}>
+          <input
+            type="text"
+            className="edit"
+            defaultValue={label}
+            onChange={this.onChangeInput}
+          />
+        </form>
       </li>
     );
   }
