@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 // import './footer.css'
 
 const Footer = ({
-  leftTodo, showCompleted, pressedButton,
-  showActive, showAll, deletCompleted,
+  leftTodo, pressedButton, deletCompleted, showTasks,
 }) => {
   const block = document.getElementsByTagName('BUTTON');
   const buttons = Array.from(block);
@@ -25,17 +24,17 @@ const Footer = ({
       </span>
       <ul className="filters">
         <li>
-          <button type="button" onClick={showAll}>
+          <button type="button" name="All" onClick={showTasks}>
             All
           </button>
         </li>
         <li>
-          <button type="button" onClick={showActive}>
+          <button type="button" name="Active" onClick={showTasks}>
             Active
           </button>
         </li>
         <li>
-          <button type="button" onClick={showCompleted}>
+          <button type="button" name="Completed" onClick={showTasks}>
             Completed
           </button>
         </li>
@@ -52,18 +51,14 @@ const Footer = ({
 };
 
 Footer.defaultProps = {
-  showCompleted: () => {},
-  showActive: () => {},
-  showAll: () => {},
+  showTasks: () => {},
   deletCompleted: () => {},
 };
 
 Footer.propTypes = {
   leftTodo: PropTypes.number.isRequired,
   pressedButton: PropTypes.string.isRequired,
-  showCompleted: PropTypes.func,
-  showActive: PropTypes.func,
-  showAll: PropTypes.func,
+  showTasks: PropTypes.func,
   deletCompleted: PropTypes.func,
 };
 

@@ -6,15 +6,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import ruLocale from 'date-fns/locale/ru';
 
 import EditingItem from './Editing-item';
 import './task.css';
 
 export default class Task extends Component {
-  state = {
-    startTime: this.props.date,
-    lastTime: '1',
+  constructor(props) {
+    super(props);
+    this.date = new Date();
+    this.formatedDate = [this.date.getFullYear(), this.date.getMonth(),
+      this.date.getDate(), this.date.getHours(),
+      this.date.getMinutes(), this.date.getSeconds()];
+    // this.formatedDate = this.date.toString().slice(4, 24);
+    this.state = {
+      createDate: this.formatedDate,
+    };
   }
 
   componentDidMount() {
@@ -29,16 +35,9 @@ export default class Task extends Component {
   }
 
   tick() {
-    const { startTime } = this.state;
-    this.setState({
-      lastTime: formatDistanceToNow(startTime,
-        {
-          addSuffix: true,
-          locale: ruLocale,
-          includeSeconds: true,
-        }),
-
-    });
+    this.setState(() => ({
+      createDate: this.formatedDate,
+    }));
   }
 
   render() {
@@ -50,8 +49,7 @@ export default class Task extends Component {
     let visibility = true;
     let className = '';
 
-    const { lastTime } = this.state;
-    const time = ` ${lastTime}`;
+    const { createDate } = this.state;
 
     if (!completed && pressedButton === 'Completed') {
       visibility = false;
@@ -79,8 +77,11 @@ export default class Task extends Component {
               { label }
             </span>
             <span className="created">
-              created
-              { time }
+              {`${'created '}`}
+              {formatDistanceToNow(
+                new Date(...createDate),
+                { addSuffix: true, includeSeconds: true },
+              )}
             </span>
           </label>
           <button
@@ -121,5 +122,4 @@ Task.propTypes = {
   onToggleCompleted: PropTypes.func.isRequired,
   onDeleted: PropTypes.func,
   onEditForm: PropTypes.func.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
 };

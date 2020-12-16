@@ -69,21 +69,9 @@ export default class App extends Component {
     }));
   }
 
-  onShowAll = () => {
+  onShowTasks = (name) => {
     this.setState(() => ({
-      pressedButton: 'All',
-    }));
-  };
-
-  onShowActive = () => {
-    this.setState(() => ({
-      pressedButton: 'Active',
-    }));
-  };
-
-  onShowCompleted = () => {
-    this.setState(() => ({
-      pressedButton: 'Completed',
+      pressedButton: name.target.name,
     }));
   };
 
@@ -129,9 +117,7 @@ export default class App extends Component {
           onEditForm={this.editItemForm}
           onToggleCompleted={this.onToggleCompleted}
           leftTodo={todoCount}
-          showAll={this.onShowAll}
-          showActive={this.onShowActive}
-          showCompleted={this.onShowCompleted}
+          showTasks={this.onShowTasks}
           deletCompleted={this.onDeletCompleted}
         />
       </section>

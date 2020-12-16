@@ -6,9 +6,8 @@ import Footer from '../Footer';
 
 const TaskList = ({
   todos, onDeleted, onEditButton,
-  onToggleCompleted, leftTodo,
-  showAll, showActive, onEditForm,
-  showCompleted, deletCompleted, pressedButton,
+  onToggleCompleted, leftTodo, showTasks,
+  onEditForm, deletCompleted, pressedButton,
 }) => {
   const elements = todos.map((item) => {
     const {
@@ -27,7 +26,6 @@ const TaskList = ({
         onEditForm={onEditForm}
         onToggleCompleted={() => { onToggleCompleted(item.id); }}
         key={id}
-        date={new Date(Date.now())}
       />
     );
   });
@@ -39,9 +37,7 @@ const TaskList = ({
       <Footer
         leftTodo={leftTodo}
         pressedButton={pressedButton}
-        showAll={showAll}
-        showActive={showActive}
-        showCompleted={showCompleted}
+        showTasks={showTasks}
         deletCompleted={deletCompleted}
       />
     </section>
@@ -49,10 +45,8 @@ const TaskList = ({
 };
 
 TaskList.defaultProps = {
-  leftTodo: () => {},
-  showAll: () => {},
-  showActive: () => {},
-  showCompleted: () => {},
+  leftTodo: () => { },
+  showTasks: () => { },
   deletCompleted: () => {},
 };
 
@@ -60,10 +54,8 @@ TaskList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   leftTodo: PropTypes.number,
   pressedButton: PropTypes.string.isRequired,
-  showAll: PropTypes.func,
-  showActive: PropTypes.func,
-  showCompleted: PropTypes.func,
   deletCompleted: PropTypes.func,
+  showTasks: PropTypes.func,
   onDeleted: PropTypes.func.isRequired,
   onEditButton: PropTypes.func.isRequired,
   onToggleCompleted: PropTypes.func.isRequired,
