@@ -42,8 +42,7 @@ export default class App extends Component {
     const alreadyEditTask = todoData.filter((el) => el.edit);
     if (!taskToEdit.completed && !alreadyEditTask.length) {
       this.setState(() => ({
-        todoData: this.toggleProperty(todoData, id,
-          'edit'),
+        todoData: this.toggleProperty(todoData, id, 'edit'),
       }));
     }
   }

@@ -21,9 +21,7 @@ export default class NewTaskForm extends Component {
       stateLabel = stateLabel.trim();
       if (stateLabel && stateLabel !== ' ') {
         onAdded(stateLabel);
-        this.setState({
-          stateLabel: '',
-        });
+        this.setState({ stateLabel: '' });
       }
     }
 
