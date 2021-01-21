@@ -76,9 +76,8 @@ export default class App extends Component {
 
   onDeletCompleted = () => {
     const { todoData } = this.state;
-    const notCompletedTask = todoData.filter((el) => !el.completed);
     this.setState(() => ({
-      todoData: [...notCompletedTask],
+      todoData: [...todoData.filter((el) => !el.completed)],
     }));
   }
 
@@ -98,8 +97,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { todoData } = this.state;
-    const { pressedButton } = this.state;
+    const { todoData, pressedButton } = this.state;
     const completedCount = todoData
       .filter((el) => el.completed).length;
     const todoCount = todoData.length - completedCount;

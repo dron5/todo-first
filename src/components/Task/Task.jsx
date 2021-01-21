@@ -15,28 +15,69 @@ export default class Task extends Component {
     this.formatedDate = [this.date.getFullYear(), this.date.getMonth(),
       this.date.getDate(), this.date.getHours(),
       this.date.getMinutes(), this.date.getSeconds()];
-    // this.formatedDate = this.date.toString().slice(4, 24);
     this.state = {
       createDate: this.formatedDate,
       stateLabel: this.props.label,
+      time: 0,
+      timerStatus: true,
+      idInterval: null,
     };
   }
 
   componentDidMount() {
-    this.timerID = setInterval(
+    this.timerFNSID = setInterval(
       () => this.tick(),
       1000,
     );
+    const { timerStatus } = this.state;
+    if (timerStatus) {
+      this.timerSecID = setInterval(
+        () => this.timerTick(),
+        1000,
+      );
+    }
+    this.setState(() => ({
+      idInterval: this.timerSecID,
+    }));
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerID);
+    clearInterval(this.timerFNSID);
+    clearInterval(this.state.idInterval);
   }
 
   onChangeInput = (event) => {
     this.setState({
       stateLabel: event.target.value,
     });
+  }
+
+  timerTick = () => {
+    this.setState(({ time }) => ({
+      time: time + 1,
+    }));
+  }
+
+  timerStart = () => {
+    const { timerStatus } = this.state;
+    if (!timerStatus) {
+      const intervalId = setInterval(
+        () => this.timerTick(),
+        1000,
+      );
+      this.setState(() => ({
+        timerStatus: true,
+        idInterval: intervalId,
+      }));
+    }
+  }
+
+  timerStop = () => {
+    const { idInterval } = this.state;
+    clearInterval(idInterval);
+    this.setState(() => ({
+      timerStatus: false,
+    }));
   }
 
   onSubmitForm = (event) => {
@@ -61,7 +102,7 @@ export default class Task extends Component {
     let visibility = true;
     let className = '';
 
-    const { createDate } = this.state;
+    const { createDate, time } = this.state;
 
     if (!completed && pressedButton === 'Completed') {
       visibility = false;
@@ -73,12 +114,35 @@ export default class Task extends Component {
     if (edit) { className = 'editing'; }
     if (!visibility) { className += ' hidden'; }
 
+    const min = Math.floor(time / 60);
+    const sec = time % 60;
     return (
       <li className={className}>
         <div className="view">
           <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
           <label>
-            <span className="description">{ label }</span>
+            <span className="description">{label}</span>
+            {/* <span className="description"> */}
+            <div className="time_container">
+              <div className="time">{`${min}: ${sec < 0 ? 0 : sec}`}</div>
+              <div>
+                <button
+                  type="button"
+                  className="play"
+                  onClick={this.timerStart}
+                >
+                  ▶
+                </button>
+                <button
+                  type="button"
+                  className="pause"
+                  onClick={this.timerStop}
+                >
+                  ⏸
+                </button>
+              </div>
+            </div>
+            {/* </span> */}
             <span className="created">
               {`${'created '}`}
               {formatDistanceToNow(
