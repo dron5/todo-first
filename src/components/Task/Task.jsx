@@ -19,7 +19,7 @@ export default class Task extends Component {
       createDate: this.formatedDate,
       stateLabel: this.props.label,
       time: 0,
-      timerStatus: true,
+      timerStatus: false,
       idInterval: null,
     };
   }
@@ -122,9 +122,15 @@ export default class Task extends Component {
           <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
           <label>
             <span className="description">{label}</span>
-            {/* <span className="description"> */}
+            <span className="created">
+              {`${'created '}`}
+              {formatDistanceToNow(
+                new Date(...createDate),
+                { addSuffix: true, includeSeconds: true },
+              )}
+            </span>
             <div className="time_container">
-              <div className="time">{`${min}: ${sec < 0 ? 0 : sec}`}</div>
+              <div className="time">{`${min}: ${sec}`}</div>
               <div>
                 <button
                   type="button"
@@ -142,14 +148,6 @@ export default class Task extends Component {
                 </button>
               </div>
             </div>
-            {/* </span> */}
-            <span className="created">
-              {`${'created '}`}
-              {formatDistanceToNow(
-                new Date(...createDate),
-                { addSuffix: true, includeSeconds: true },
-              )}
-            </span>
           </label>
           <button type="button" className="icon icon-edit" onClick={onEditButton} />
           <button type="button" className="icon icon-destroy" onClick={onDeleted} />

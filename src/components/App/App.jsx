@@ -31,9 +31,9 @@ export default class App extends Component {
 
   deletItem = (id) => {
     const { todoData } = this.state;
-    this.setState(() => ({
+    this.setState({
       todoData: [...todoData.filter((el) => el.id !== id)],
-    }));
+    });
   }
 
   editItemButton = (id) => {
@@ -41,9 +41,9 @@ export default class App extends Component {
     const [taskToEdit] = todoData.filter((el) => el.id === id);
     const alreadyEditTask = todoData.filter((el) => el.edit);
     if (!taskToEdit.completed && !alreadyEditTask.length) {
-      this.setState(() => ({
+      this.setState({
         todoData: this.toggleProperty(todoData, id, 'edit'),
-      }));
+      });
     }
   }
 
@@ -57,9 +57,9 @@ export default class App extends Component {
       }
       return el;
     });
-    this.setState(() => ({
+    this.setState({
       todoData: [...newData],
-    }));
+    });
   }
 
   onToggleCompleted = (id) => {
@@ -69,16 +69,16 @@ export default class App extends Component {
   }
 
   onShowTasks = (name) => {
-    this.setState(() => ({
+    this.setState({
       pressedButton: name.target.name,
-    }));
+    });
   };
 
   onDeletCompleted = () => {
     const { todoData } = this.state;
-    this.setState(() => ({
+    this.setState({
       todoData: [...todoData.filter((el) => !el.completed)],
-    }));
+    });
   }
 
   toggleProperty = (taskToEdit, id, propName) => {
