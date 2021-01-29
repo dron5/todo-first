@@ -36,6 +36,16 @@ export default class NewTaskForm extends Component {
             onChange={this.onAddItem}
             value={stateLabel}
           />
+          <input
+            className="new-todo__timer"
+            placeholder="min"
+            name="min"
+          />
+          <input
+            className="new-todo__timer"
+            placeholder="sec"
+            name="sec"
+          />
         </form>
       );
     }

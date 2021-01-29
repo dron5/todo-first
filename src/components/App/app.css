@@ -99,9 +99,9 @@ label {
 
 .new-todo,
 .edit {
-	position: relative;
+	position: static;
 	margin: 0;
-	width: 100%;
+	width: 74%;
 	font-size: 24px;
 	font-family: inherit;
 	font-weight: inherit;
@@ -116,10 +116,23 @@ label {
 }
 
 .new-todo {
-	padding: 16px 16px 16px 60px;
+	padding: 16px 16px 16px 25px;
 	border: none;
 	background: rgba(0, 0, 0, 0.003);
 	box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
+}
+
+.new-todo__timer{
+	margin-right: 0px;
+	padding: 16px;
+	width: 13%;
+	margin: 0;
+	font-size: 24px;
+	font-family: inherit;
+	font-weight: inherit;
+	line-height: 1.4em;
+	color: inherit;
+	border: none;border: none;
 }
 
 .main {
@@ -386,31 +399,33 @@ html .clear-completed:active {
 	margin-right: 5px;
 }
 
-.time_container .icon-play:focus{
-	color: black;
-}
-
 .time_container .icon-play{
-	width: 14px !important;
-	height: 14px !important;
+	width: 14px;
+	height: 14x;
 	transform: scale(0.6);
+	opacity: 0.4;
+	color: darkred;
 }
+/* .time_container .icon-play:hover{
+	color: black;
+} */
 
 .time_container .icon-stop{
-	width: 14px !important;
-	height: 14px !important;
+	width: 14px;
+	height: 14px;
 	transform: scale(0.7);
+	opacity: 0.4;
+	color: darkred;
 }
 
 .time_container .icon-play::after{
+	display: block;
 	content: '▶';
-	color: darkred;
-	opacity: 0.4;
+	/* box-sizing: border-box; */
 }
 .time_container .icon-stop::after{
 	content: '⏸';
-	color: darkred;
-	opacity: 0.4;
+	/* box-sizing: border-box; */
 }
 
 .time_container {
