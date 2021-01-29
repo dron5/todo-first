@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/control-has-associated-label */
@@ -141,7 +142,9 @@ export default class Task extends Component {
               )}
             </span>
             <div className="time_container">
-              <div className="time">{`${min}: ${sec}`}</div>
+              <div className="time">
+                {`${min < 10 ? '0' + min : min}: ${sec < 10 ? '0' + sec : sec}`}
+              </div>
               <button type="button" className={timerClassName} onClick={this.onToggleTimer} />
             </div>
           </label>

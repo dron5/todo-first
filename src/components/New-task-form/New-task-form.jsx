@@ -35,6 +35,7 @@ export default class NewTaskForm extends Component {
             placeholder={searchText}
             onChange={this.onAddItem}
             value={stateLabel}
+            name="taskText"
           />
           <input
             className="new-todo__timer"
