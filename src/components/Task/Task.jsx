@@ -88,6 +88,13 @@ export default class Task extends Component {
     if (stateLabel && stateLabel !== ' ') { onEditForm(id, stateLabel); }
   }
 
+  onToggleTimer = () => {
+    const { timerStatus } = this.state;
+    if (timerStatus) {
+      this.timerStop();
+    } else { this.timerStart(); }
+  }
+
   tick() {
     this.setState(() => ({
       createDate: this.formatedDate,
@@ -102,7 +109,7 @@ export default class Task extends Component {
     let visibility = true;
     let className = '';
 
-    const { createDate, time } = this.state;
+    const { createDate, time, timerStatus } = this.state;
 
     if (!completed && pressedButton === 'Completed') {
       visibility = false;
@@ -116,6 +123,10 @@ export default class Task extends Component {
 
     const min = Math.floor(time / 60);
     const sec = time % 60;
+    let timerClassName = 'icon-stop';
+    if (!timerStatus) {
+      timerClassName = 'icon-play';
+    }
     return (
       <li className={className}>
         <div className="view">
@@ -131,22 +142,7 @@ export default class Task extends Component {
             </span>
             <div className="time_container">
               <div className="time">{`${min}: ${sec}`}</div>
-              <div>
-                <button
-                  type="button"
-                  className="play"
-                  onClick={this.timerStart}
-                >
-                  ▶
-                </button>
-                <button
-                  type="button"
-                  className="pause"
-                  onClick={this.timerStop}
-                >
-                  ⏸
-                </button>
-              </div>
+              <button type="button" className={timerClassName} onClick={this.onToggleTimer} />
             </div>
           </label>
           <button type="button" className="icon icon-edit" onClick={onEditButton} />

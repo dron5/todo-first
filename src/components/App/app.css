@@ -235,7 +235,7 @@ label {
 .todo-list li label .created {
 	font-size: 13px;
 	color: gray;
-	margin-right: 5px;
+	margin-right: 0px;
   margin-left: auto;
 }
 
@@ -380,25 +380,45 @@ html .clear-completed:active {
 	text-decoration: underline;
 }
 
-.play, .pause{
-	font-size: 14px;
-	width: 14px;
-	height: 14px;
-	color: darkred;
-	opacity: 0.23;
-	transform: translateY(-1px);
-}
-
 .time{
 	font-size: 12px;
-	margin-bottom: -10px;
+	margin-bottom: -8px;
+	margin-right: 5px;
 }
+
+.time_container .icon-play:focus{
+	color: black;
+}
+
+.time_container .icon-play{
+	width: 14px !important;
+	height: 14px !important;
+	transform: scale(0.6);
+}
+
+.time_container .icon-stop{
+	width: 14px !important;
+	height: 14px !important;
+	transform: scale(0.7);
+}
+
+.time_container .icon-play::after{
+	content: '▶';
+	color: darkred;
+	opacity: 0.4;
+}
+.time_container .icon-stop::after{
+	content: '⏸';
+	color: darkred;
+	opacity: 0.4;
+}
+
 .time_container {
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 	align-items: center;
-	width: 68px;
+	width: 55px;
 	margin-left: 2px;
 	margin-bottom: auto;
 	margin-top: auto;
