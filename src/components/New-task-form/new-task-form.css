@@ -1,4 +1,4 @@
-.new-task-form {
+/* .new-task-form {
     font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-style : italic;
     outline: none;
@@ -9,4 +9,7 @@
     line-height: 1.4em;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-} 
+}  */
+.hidden{
+    display: none;
+}

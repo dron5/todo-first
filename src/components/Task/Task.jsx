@@ -19,7 +19,7 @@ export default class Task extends Component {
     this.state = {
       createDate: this.formatedDate,
       stateLabel: this.props.label,
-      time: 0,
+      time: this.props.timeToComplete,
       timerStatus: false,
       idInterval: null,
     };
@@ -55,12 +55,22 @@ export default class Task extends Component {
 
   timerTick = () => {
     this.setState(({ time }) => ({
-      time: time + 1,
+      time: time - 1,
     }));
+    const { time } = this.state;
+    const { onToggleCompleted, completed } = this.props;
+    if (completed) this.timerStop();
+    if (time < 1) {
+      this.timerStop();
+      onToggleCompleted();
+    }
   }
 
   timerStart = () => {
-    const { timerStatus } = this.state;
+    const { timerStatus, time } = this.state;
+    const { completed } = this.props;
+    if (completed) return;
+    if (!time) return;
     if (!timerStatus) {
       const intervalId = setInterval(
         () => this.timerTick(),
@@ -96,6 +106,8 @@ export default class Task extends Component {
     } else { this.timerStart(); }
   }
 
+  dummyFunc = () => { };
+
   tick() {
     this.setState(() => ({
       createDate: this.formatedDate,
@@ -109,6 +121,7 @@ export default class Task extends Component {
     } = this.props;
     let visibility = true;
     let className = '';
+    const condition = completed;
 
     const { createDate, time, timerStatus } = this.state;
 
@@ -131,7 +144,13 @@ export default class Task extends Component {
     return (
       <li className={className}>
         <div className="view">
-          <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
+          <input
+            className="toggle"
+            type="checkbox"
+            checked={condition}
+            onChange={this.dummyFunc}
+            onClick={onToggleCompleted}
+          />
           <label>
             <span className="description">{label}</span>
             <span className="created">
@@ -165,12 +184,14 @@ export default class Task extends Component {
 }
 Task.defaultProps = {
   onDeleted: () => {},
-  onEditButton: () => {},
+  onEditButton: () => { },
+  timeToComplete: 300,
 };
 
 Task.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  timeToComplete: PropTypes.number,
   edit: PropTypes.bool.isRequired,
   completed: PropTypes.bool.isRequired,
   pressedButton: PropTypes.string.isRequired,

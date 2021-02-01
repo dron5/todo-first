@@ -15,15 +15,15 @@ export default class App extends Component {
 
   state = {
     todoData: [
-      this.createItem('Completed task'),
-      this.createItem('Editing task'),
-      this.createItem('Active task'),
+      this.createItem('Completed task', 60),
+      this.createItem('Editing task', 60),
+      this.createItem('Active task', 60),
     ],
     pressedButton: 'All',
   }
 
-  addItem = (text) => {
-    const newTask = this.createItem(text);
+  addItem = (taskName, timeToComplete) => {
+    const newTask = this.createItem(taskName, timeToComplete);
     this.setState(({ todoData }) => ({
       todoData: [...todoData, newTask],
     }));
@@ -87,12 +87,13 @@ export default class App extends Component {
     return toggledProperty;
   }
 
-  createItem(label) {
+  createItem(label, timeToComplete) {
     return {
       label,
       edit: false,
       completed: false,
       id: this.maxId++,
+      timeToComplete,
     };
   }
 

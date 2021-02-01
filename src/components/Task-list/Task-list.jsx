@@ -11,7 +11,7 @@ const TaskList = ({
 }) => {
   const elements = todos.map((item) => {
     const {
-      id, label, edit, completed,
+      id, label, edit, completed, timeToComplete,
     } = item;
 
     return (
@@ -20,6 +20,7 @@ const TaskList = ({
         edit={edit}
         id={id}
         completed={completed}
+        timeToComplete={timeToComplete}
         pressedButton={pressedButton}
         onDeleted={() => { onDeleted(item.id); }}
         onEditButton={() => { onEditButton(item.id); }}
@@ -47,7 +48,7 @@ const TaskList = ({
 TaskList.defaultProps = {
   leftTodo: () => { },
   showTasks: () => { },
-  deletCompleted: () => {},
+  deletCompleted: () => { },
 };
 
 TaskList.propTypes = {

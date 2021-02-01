@@ -101,7 +101,7 @@ label {
 .edit {
 	position: static;
 	margin: 0;
-	width: 73%;
+	width: 67%;
 	font-size: 24px;
 	font-family: inherit;
 	font-weight: inherit;
@@ -125,7 +125,7 @@ label {
 .new-todo__timer{
 	margin-right: 0px;
 	padding: 16px;
-	width: 13.5%;
+	width: 16%;
 	margin: 0;
 	font-size: 24px;
 	font-family: inherit;
@@ -402,18 +402,15 @@ html .clear-completed:active {
 .time_container .icon-play{
 	width: 14px;
 	height: 14x;
-	transform: scale(0.6) translateY(3px);
+	transform: scale(0.6) translateY(2px);
 	opacity: 0.4;
 	color: darkred;
 }
-/* .time_container .icon-play:hover{
-	color: black;
-} */
 
 .time_container .icon-stop{
 	width: 14px;
 	height: 14px;
-	transform: scale(0.7) translateY(3px);
+	transform: scale(0.7) translateY(1px);
 	opacity: 0.4;
 	color: darkred;
 }
