@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Task from '../Task';
-import './Task-list.css';
+import './TaskList.css';
 import Footer from '../Footer';
 
 const TaskList = ({

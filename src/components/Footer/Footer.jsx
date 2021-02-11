@@ -4,52 +4,55 @@ import PropTypes from 'prop-types';
 
 const Footer = ({
   leftTodo, pressedButton, deletCompleted, showTasks,
-}) => {
-  const block = document.getElementsByTagName('BUTTON');
-  const buttons = Array.from(block);
-  buttons.forEach((el) => {
-    el.classList.remove('selected');
-    if (el.innerHTML === pressedButton) {
-      el.classList.add('selected');
-    }
-  });
-
-  return (
-    <footer className="footer">
-      <span className="todo-count">
-        {' '}
-        {leftTodo}
-        {' '}
-        items left
-      </span>
-      <ul className="filters">
-        <li>
-          <button type="button" name="All" onClick={showTasks}>
-            All
-          </button>
-        </li>
-        <li>
-          <button type="button" name="Active" onClick={showTasks}>
-            Active
-          </button>
-        </li>
-        <li>
-          <button type="button" name="Completed" onClick={showTasks}>
-            Completed
-          </button>
-        </li>
-      </ul>
-      <button
-        type="button"
-        className="clear-completed"
-        onClick={deletCompleted}
-      >
-        Clear completed
-      </button>
-    </footer>
-  );
-};
-
+}) => (
+  <footer className="footer">
+    <span className="todo-count">
+      {' '}
+      {leftTodo}
+      {' '}
+      items left
+    </span>
+    <ul className="filters">
+      <li>
+        <button
+          type="button"
+          name="All"
+          className={pressedButton === 'All' ? 'selected' : ''}
+          onClick={showTasks}
+        >
+          All
+        </button>
+      </li>
+      <li>
+        <button
+          type="button"
+          name="Active"
+          className={pressedButton === 'Active' ? 'selected' : ''}
+          onClick={showTasks}
+        >
+          Active
+        </button>
+      </li>
+      <li>
+        <button
+          type="button"
+          name="Completed"
+          className={pressedButton === 'Completed' ? 'selected' : ''}
+          onClick={showTasks}
+        >
+          Completed
+        </button>
+      </li>
+    </ul>
+    <button
+      type="button"
+      className="clear-completed"
+      onClick={deletCompleted}
+    >
+      Clear completed
+    </button>
+  </footer>
+);
 Footer.defaultProps = {
   showTasks: () => {},
   deletCompleted: () => {},

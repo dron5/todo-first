@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import NewTaskForm from '../New-task-form';
+import NewTaskForm from '../NewTaskForm';
 // import './header.css'
 
 const Header = ({ onAdded }) => (
