@@ -25,10 +25,13 @@ const NewTaskForm = ({ onAdded }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    let { stateLabel } = dataState;
-    const { mins, seconds } = dataState;
+    let { stateLabel, mins } = dataState;
+    const { seconds } = dataState;
     stateLabel = stateLabel.trim();
     if (stateLabel && stateLabel !== ' ') {
+      if (+mins + +seconds === 0) {
+        mins = 5;
+      }
       onAdded(stateLabel, +mins * 60 + +seconds);
       setDataState(initialState);
     }
