@@ -30,15 +30,6 @@ const Task = ({
   const countRef = useRef(time);
   countRef.current = time;
 
-  const tick = () => {
-    setDataState(() => ({ ...dataState, createDate: formatedDate }));
-  };
-
-  useEffect(() => {
-    const interval = setInterval(tick, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   useEffect(() => {
     let intervalId;
     if (timerStatus) {
